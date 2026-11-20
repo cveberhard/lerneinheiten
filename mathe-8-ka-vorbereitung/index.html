@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Übungsstunde Klassenarbeit Terme und Gleichungen Klasse 8 Mathematik</title>
+<style>
+:root{
+  --hdr:#2D6E7E; --acc:#3D8E9F; --hl:#C8246A; --bg:#F0F7F9;
+  --warm:#E9A84C; --wht:#FFFFFF; --grey:#5A6475; --green:#2E7D32;
+  --lbg:#E8F4F6; --heft:#2D6E7E; --heft-bg:#EBF4F6; --red:#B3261E;
+  --txt:#1C1C1A;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Calibri,Carlito,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.5;color:var(--txt);background:var(--bg)}
+math{font-size:1.2em}
+.topbar{background:var(--hdr);color:var(--wht);padding:14px 24px;border-left:10px solid var(--hl)}
+.topbar h1{margin:0;font-size:26px}
+.topbar .sub{font-size:14px;opacity:.9}
+.nav-bar{display:flex;flex-wrap:wrap;gap:6px;padding:10px 24px;background:var(--wht);border-bottom:2px solid var(--hdr);position:sticky;top:0;z-index:5}
+.phase-btn{border:2px solid var(--hdr);background:var(--wht);color:var(--hdr);border-radius:20px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer}
+.phase-btn.active{background:var(--hdr);color:var(--wht)}
+main{max-width:980px;margin:0 auto;padding:20px 24px 60px}
+.phase-section{display:none}
+.phase-section.active{display:block}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.section-badge{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:22px;color:var(--wht);background:var(--hdr);flex:none}
+.section-badge.warm{background:var(--warm);color:var(--txt)}
+.section-badge.green{background:var(--green)}
+.section-title h2{margin:0;font-size:24px;color:var(--hdr)}
+.meta{font-size:14px;color:var(--grey)}
+.card{background:var(--wht);border:2px solid var(--hdr);border-radius:12px;margin-bottom:18px;overflow:hidden}
+.card-hdr{background:var(--hdr);color:var(--wht);padding:8px 16px;font-weight:bold;font-size:17px}
+.card-hdr.acc{background:var(--hl)}
+.card-hdr.warm{background:var(--warm);color:var(--txt)}
+.card-body{padding:14px 16px}
+.card p{margin:0 0 10px}
+.fach{font-weight:bold;color:var(--hdr)}
+.btn{border:none;border-radius:8px;padding:10px 18px;font:inherit;font-size:16px;cursor:pointer}
+.btn-sm{padding:6px 14px;font-size:15px}
+.btn-primary{background:var(--hdr);color:var(--wht)}
+.btn-secondary{background:var(--wht);color:var(--hdr);border:2px solid var(--hdr)}
+.btn-reveal{background:var(--warm);color:var(--txt)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.nav-row{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
+input[type=text],input[type=number],textarea,select{font:inherit;border:2px solid var(--hl);border-radius:8px;padding:8px 10px;width:100%;background:var(--wht)}
+textarea{min-height:90px}
+.hint{font-size:13px;color:var(--grey);margin-top:4px}
+.loesung{display:none;margin-top:10px;padding:10px 14px;border-left:6px solid var(--green);background:#EAF5EA}
+.loesung.shown{display:block}
+.hefteintrag{background:var(--heft-bg);border:2px dashed var(--heft);border-radius:12px;padding:14px 16px;margin-bottom:18px}
+.hefteintrag h3{margin:0 0 8px;color:var(--heft)}
+.tip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:18px}
+.tip{background:var(--lbg);border-radius:10px;padding:12px;border-top:5px solid var(--acc)}
+.tip h4{margin:0 0 6px;color:var(--hdr)}
+.tip .label{display:inline-block;font-size:13px;font-weight:bold;color:var(--wht);background:var(--hl);border-radius:10px;padding:1px 10px;margin-top:4px}
+.tf-fb{font-size:14px;margin-top:6px}
+.quiz-q{background:var(--wht);border-left:8px solid var(--hl);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+.quiz-q.abschluss{border-left-color:var(--hdr)}
+.quiz-q .frage{font-weight:bold;margin-bottom:8px}
+.opt{display:block;width:100%;text-align:left;border:2px solid var(--lbg);background:var(--wht);border-radius:8px;padding:8px 12px;margin-bottom:6px;font:inherit;cursor:pointer}
+.opt.richtig{border-color:var(--green);background:#EAF5EA}
+.opt.falsch{border-color:var(--red);background:#FBEAE9}
+.quiz-score{font-weight:bold;color:var(--hdr)}
+.stern-table{width:100%;border-collapse:collapse;margin-bottom:18px;background:var(--wht)}
+.stern-table th,.stern-table td{border:2px solid var(--hdr);padding:8px 10px;text-align:left}
+.stern-table th{background:var(--hdr);color:var(--wht)}
+.sterne{display:inline-flex;gap:4px}
+.stern{display:inline-flex;width:34px;height:34px;align-items:center;justify-content:center;border:2px solid var(--hdr);border-radius:50%;cursor:pointer;color:var(--hdr);font-weight:bold;user-select:none}
+.stern.on{background:var(--warm);border-color:var(--warm);color:var(--txt)}
+.wahl-karte{background:var(--wht);border:3px solid var(--hl);border-radius:12px;padding:12px 16px;margin-bottom:14px}
+.wahl-karte h3{margin:0 0 6px;color:var(--hl)}
+.wahl-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.wahl-btn{border:2px solid var(--hdr);background:var(--wht);color:var(--hdr);border-radius:10px;padding:10px 18px;font:inherit;font-weight:bold;cursor:pointer}
+.wahl-btn.on{background:var(--hdr);color:var(--wht)}
+.niveau-panel{display:none}
+.niveau-panel.shown{display:block}
+.aktion-box{border:3px solid var(--green);border-radius:12px;padding:12px 16px;margin-bottom:18px;background:var(--wht)}
+.aktion-box h3{margin:0 0 6px;color:var(--green)}
+.lernziel-bar{background:var(--hdr);color:var(--wht);border-radius:10px;padding:10px 16px;margin-top:20px}
+.formel{background:var(--lbg);border-radius:10px;padding:10px 16px;margin-bottom:12px}
+.formel .ex{color:var(--grey);font-size:14px}
+.footer{margin-top:40px;text-align:center}
+.btn-reset{background:var(--wht);color:var(--grey);border:2px solid var(--grey);font-size:14px}
+.item{border:2px solid var(--lbg);border-radius:10px;padding:10px 14px;margin-bottom:10px;background:var(--wht)}
+.item-q{margin-bottom:6px}
+.ausdruck{white-space:nowrap;font-weight:bold}
+.item-in{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.item-in input[type=text]{width:min(300px,100%)}
+.item.ok{border-color:var(--green);background:#EAF5EA}
+.item.bad{border-color:var(--red);background:#FBEAE9}
+.item.ok .tf-fb{color:var(--green)}
+.item.bad .tf-fb{color:var(--red)}
+.unit{color:var(--grey)}
+.phase-score{font-weight:bold;color:var(--hdr);margin:6px 0 0}
+.timer-box{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.timer{font-size:34px;font-weight:bold;color:var(--hdr);min-width:100px}
+.timer.ende{color:var(--red)}
+.skizze{max-width:340px;width:100%;margin:6px 0 10px}
+@media (max-width:700px){.topbar,.nav-bar,main{padding-left:14px;padding-right:14px}}
+@media print{html{filter:grayscale(1)}.niveau-panel{display:block!important}.wahl-karte{display:none}.nav-bar,.nav-row,.footer,.btn,.timer-box{display:none}.phase-section{display:block!important;page-break-after:always}}
+</style>
+</head>
+<body>
+<div class="topbar"><h1>Übungsstunde zur Klassenarbeit: Terme und Gleichungen</h1><div class="sub">Mathematik Klasse 8a | Schloss-Realschule</div></div>
+<nav class="nav-bar"><button class="phase-btn active" onclick="showPhase(0)">1 Einstieg</button><button class="phase-btn" onclick="showPhase(1)">2 Teil A</button><button class="phase-btn" onclick="showPhase(2)">3 Terme</button><button class="phase-btn" onclick="showPhase(3)">4 Gleichungen</button><button class="phase-btn" onclick="showPhase(4)">5 Sachaufgaben</button><button class="phase-btn" onclick="showPhase(5)">6 Abschluss</button></nav>
+<main>
+<section class="phase-section active" id="phase1">
+<div class="section-header"><div class="section-badge ">1</div><div class="section-title"><h2>Einstieg</h2><div class="meta">5 Min. | Einzelarbeit</div></div></div>
+<div class="card"><div class="card-hdr acc">Worum geht es heute</div><div class="card-body"><p>Wir üben für die Klassenarbeit zu <span class="fach">Terme und Gleichungen</span>. Sie besteht aus Teil A (10 Minuten, ohne Hilfsmittel) und dem Hauptteil (60 Minuten). Die Aufgaben heute sind neu und ähnlich aufgebaut wie in der Arbeit.</p></div></div>
+<div class="tip-grid"><div class="tip"><h4>Terme vereinfachen</h4><p>Gleichartige Glieder zusammenfassen, Produkte und Quotienten.</p></div><div class="tip"><h4>Summen multiplizieren</h4><p>Klammern ausmultiplizieren und zusammenfassen.</p></div><div class="tip"><h4>Gleichungen lösen</h4><p>Mit Klammern, Rechenweg und Probe.</p></div><div class="tip"><h4>Gleichungen aufstellen</h4><p>Sachaufgaben mit Planskizze, Gleichung und Antwort.</p></div><div class="tip"><h4>Umfang und Flächeninhalt</h4><p>Rechteck und Quadrat, auch im Koordinatensystem.</p></div><div class="tip"><h4>Ausklammern und binomische Formeln</h4><p>Wird nur im M-Niveau geprüft.</p><span class="label">M-Niveau</span></div></div>
+<p><strong>Wie sicher bist du?</strong> 1 bedeutet noch unsicher, 5 bedeutet sicher.</p><table class="stern-table"><tr><th>Ich kann ...</th><th>Selbsteinschätzung</th></tr><tr><td>Terme vereinfachen.</td><td><span class="sterne"><span class="stern" data-row="v1" data-n="1" onclick="setStern('v1',1)">1</span><span class="stern" data-row="v1" data-n="2" onclick="setStern('v1',2)">2</span><span class="stern" data-row="v1" data-n="3" onclick="setStern('v1',3)">3</span><span class="stern" data-row="v1" data-n="4" onclick="setStern('v1',4)">4</span><span class="stern" data-row="v1" data-n="5" onclick="setStern('v1',5)">5</span></span></td></tr><tr><td>Summen ausmultiplizieren.</td><td><span class="sterne"><span class="stern" data-row="v2" data-n="1" onclick="setStern('v2',1)">1</span><span class="stern" data-row="v2" data-n="2" onclick="setStern('v2',2)">2</span><span class="stern" data-row="v2" data-n="3" onclick="setStern('v2',3)">3</span><span class="stern" data-row="v2" data-n="4" onclick="setStern('v2',4)">4</span><span class="stern" data-row="v2" data-n="5" onclick="setStern('v2',5)">5</span></span></td></tr><tr><td>Gleichungen mit Klammern lösen und die Probe machen.</td><td><span class="sterne"><span class="stern" data-row="v3" data-n="1" onclick="setStern('v3',1)">1</span><span class="stern" data-row="v3" data-n="2" onclick="setStern('v3',2)">2</span><span class="stern" data-row="v3" data-n="3" onclick="setStern('v3',3)">3</span><span class="stern" data-row="v3" data-n="4" onclick="setStern('v3',4)">4</span><span class="stern" data-row="v3" data-n="5" onclick="setStern('v3',5)">5</span></span></td></tr><tr><td>Zu einer Sachaufgabe eine Gleichung aufstellen.</td><td><span class="sterne"><span class="stern" data-row="v4" data-n="1" onclick="setStern('v4',1)">1</span><span class="stern" data-row="v4" data-n="2" onclick="setStern('v4',2)">2</span><span class="stern" data-row="v4" data-n="3" onclick="setStern('v4',3)">3</span><span class="stern" data-row="v4" data-n="4" onclick="setStern('v4',4)">4</span><span class="stern" data-row="v4" data-n="5" onclick="setStern('v4',5)">5</span></span></td></tr><tr><td>Umfang und Flächeninhalt von Rechteck und Quadrat im Koordinatensystem berechnen.</td><td><span class="sterne"><span class="stern" data-row="v5" data-n="1" onclick="setStern('v5',1)">1</span><span class="stern" data-row="v5" data-n="2" onclick="setStern('v5',2)">2</span><span class="stern" data-row="v5" data-n="3" onclick="setStern('v5',3)">3</span><span class="stern" data-row="v5" data-n="4" onclick="setStern('v5',4)">4</span><span class="stern" data-row="v5" data-n="5" onclick="setStern('v5',5)">5</span></span></td></tr><tr><td>Ausklammern und binomische Formeln anwenden (M-Niveau).</td><td><span class="sterne"><span class="stern" data-row="v6" data-n="1" onclick="setStern('v6',1)">1</span><span class="stern" data-row="v6" data-n="2" onclick="setStern('v6',2)">2</span><span class="stern" data-row="v6" data-n="3" onclick="setStern('v6',3)">3</span><span class="stern" data-row="v6" data-n="4" onclick="setStern('v6',4)">4</span><span class="stern" data-row="v6" data-n="5" onclick="setStern('v6',5)">5</span></span></td></tr></table>
+<div class="aktion-box"><h3>Aktion</h3><p>Markiere die zwei Themen mit den kleinsten Zahlen. Auf diese achtest du in den nächsten Phasen besonders.</p></div>
+<div class="nav-row"><span></span><button class="btn btn-primary" onclick="showPhase(1)">Weiter: Teil A trainieren</button></div>
+</section>
+<section class="phase-section" id="phase2">
+<div class="section-header"><div class="section-badge warm">2</div><div class="section-title"><h2>Teil A trainieren</h2><div class="meta">10 Min. | Einzelarbeit, ohne Taschenrechner</div></div></div>
+<div class="card"><div class="card-hdr warm">Stoppuhr wie in der Arbeit</div><div class="card-body"><div class="timer-box"><div class="timer" id="timer">10:00</div><button class="btn btn-primary btn-sm" onclick="timerStart()">Start</button><button class="btn btn-secondary btn-sm" onclick="timerStop()">Stopp</button><button class="btn btn-secondary btn-sm" onclick="timerReset()">Zurücksetzen</button></div><p>Schreibe Terme so einfach wie möglich, zum Beispiel <strong>3x + 2</strong> oder <strong>x^2 + 5x</strong>. Das Quadrat kannst du mit ^2 oder ² schreiben.</p></div></div>
+<div class="wahl-karte"><h3>Niveau</h3><p>G-Niveau oder M-Niveau. Ein Wechsel ist jederzeit möglich.</p><div class="wahl-btns"><button class="wahl-btn" data-group="w1" data-level="g" onclick="chooseLevel(this)">G-Niveau</button><button class="wahl-btn" data-group="w1" data-level="m" onclick="chooseLevel(this)">M-Niveau</button></div></div>
+<div class="niveau-panel" data-group="w1" data-level="g">
+<div class="item" data-type="term" data-poly="7x-3y" data-show="7x − 3y"><div class="item-q">1) <span class="ausdruck">6x + 2y + x − 5y =</span> Vereinfache.</div><div class="item-in"><input type="text" id="ta1_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="term" data-poly="8xy" data-show="8xy"><div class="item-q">2) <span class="ausdruck">4x · 2y =</span> Vereinfache.</div><div class="item-in"><input type="text" id="ta2_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="term" data-poly="12x-15" data-show="12x − 15"><div class="item-q">3) <span class="ausdruck">3 · (4x − 5) =</span> Multipliziere aus.</div><div class="item-in"><input type="text" id="ta3_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="term" data-poly="x^2+7x+12" data-show="x² + 7x + 12"><div class="item-q">4) <span class="ausdruck">(x + 3) · (x + 4) =</span> Multipliziere aus und vereinfache.</div><div class="item-in"><input type="text" id="ta4_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="term" data-poly="5x+3" data-show="9x − 4x + 3 = 5x + 3" data-hint="Vor der Klammer steht ein Minus: alle Vorzeichen in der Klammer drehen sich um."><div class="item-q">5) <span class="ausdruck">9x − (4x − 3) =</span> Löse die Klammer auf und vereinfache.</div><div class="item-in"><input type="text" id="ta5_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="6" data-show="x = 6"><div class="item-q">6) <span class="ausdruck">5x + 8 = 38</span> Löse die Gleichung.</div><div class="item-in"><input type="text" id="ta6_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="7" data-show="2x + 10 = 24, also x = 7"><div class="item-q">7) <span class="ausdruck">2 · (x + 5) = 24</span> Löse die Gleichung.</div><div class="item-in"><input type="text" id="ta7_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="36" data-show="36 cm²"><div class="item-q">8) Ein Rechteck ist 9 cm lang und 4 cm breit. Berechne den Flächeninhalt.</div><div class="item-in"><input type="text" id="ta8_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">cm²</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="28" data-show="4 · 7 cm = 28 cm"><div class="item-q">9) Ein Quadrat hat die Seitenlänge 7 cm. Berechne den Umfang.</div><div class="item-in"><input type="text" id="ta9_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">cm</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="34" data-show="2 · (12 cm + 5 cm) = 34 cm"><div class="item-q">10) Ein Rechteck hat die Seitenlängen 12 cm und 5 cm. Berechne den Umfang.</div><div class="item-in"><input type="text" id="ta10_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">cm</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div>
+<div class="niveau-panel" data-group="w1" data-level="m">
+<div class="item" data-type="term" data-poly="7x-3y" data-show="7x − 3y"><div class="item-q">1) <span class="ausdruck">6x + 2y + x − 5y =</span> Vereinfache.</div><div class="item-in"><input type="text" id="ta1_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="term" data-poly="x^2+7x+12" data-show="x² + 7x + 12"><div class="item-q">2) <span class="ausdruck">(x + 3) · (x + 4) =</span> Multipliziere aus und vereinfache.</div><div class="item-in"><input type="text" id="ta2_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="term" data-poly="x^2+10x+25" data-show="x² + 10x + 25" data-hint="(a + b)² = a² + 2ab + b²."><div class="item-q">3) <span class="ausdruck">(x + 5)² =</span> Multipliziere mit einer binomischen Formel aus.</div><div class="item-in"><input type="text" id="ta3_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="faktor" data-poly="8x-24" data-inner="x-3" data-show="8 · (x − 3)"><div class="item-q">4) <span class="ausdruck">8x − 24 =</span> Klammere einen möglichst großen Faktor aus.</div><div class="item-in"><input type="text" id="ta4_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="6" data-show="x = 6"><div class="item-q">5) <span class="ausdruck">5x + 8 = 38</span> Löse die Gleichung.</div><div class="item-in"><input type="text" id="ta5_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="4" data-show="3x = 12, also x = 4"><div class="item-q">6) <span class="ausdruck">4x + 3 = x + 15</span> Löse die Gleichung.</div><div class="item-in"><input type="text" id="ta6_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="7" data-show="2x + 10 = 24, also x = 7"><div class="item-q">7) <span class="ausdruck">2 · (x + 5) = 24</span> Löse die Gleichung.</div><div class="item-in"><input type="text" id="ta7_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="36" data-show="36 cm²"><div class="item-q">8) Ein Rechteck ist 9 cm lang und 4 cm breit. Berechne den Flächeninhalt.</div><div class="item-in"><input type="text" id="ta8_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">cm²</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="28" data-show="4 · 7 cm = 28 cm"><div class="item-q">9) Ein Quadrat hat die Seitenlänge 7 cm. Berechne den Umfang.</div><div class="item-in"><input type="text" id="ta9_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">cm</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="34" data-show="2 · (12 cm + 5 cm) = 34 cm"><div class="item-q">10) Ein Rechteck hat die Seitenlängen 12 cm und 5 cm. Berechne den Umfang.</div><div class="item-in"><input type="text" id="ta10_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">cm</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div>
+<div class="phase-score"></div>
+<div class="nav-row"><button class="btn btn-secondary" onclick="showPhase(0)">Zurück</button><button class="btn btn-primary" onclick="showPhase(2)">Weiter: Terme</button></div>
+</section>
+<section class="phase-section" id="phase3">
+<div class="section-header"><div class="section-badge ">3</div><div class="section-title"><h2>Terme vereinfachen und ausmultiplizieren</h2><div class="meta">12 Min. | Einzelarbeit</div></div></div>
+<div class="formel"><strong>Gleichartige Glieder zusammenfassen</strong><br>5a + 3b − 2a = 3a + 3b<br><span class="ex">Buchstaben und Hochzahlen müssen gleich sein.</span></div><div class="formel"><strong>Summe mal Summe</strong><br>(a + b) · (c + d) = ac + ad + bc + bd<br><span class="ex">Jedes Glied der ersten Klammer mit jedem Glied der zweiten Klammer multiplizieren.</span></div><div class="formel"><strong>Minusklammer</strong><br>−(3x − 2) = −3x + 2<br><span class="ex">Alle Vorzeichen in der Klammer drehen sich um.</span></div>
+<div class="card"><div class="card-hdr acc">Aufgabe 1: Vereinfache</div><div class="card-body"><div class="item" data-type="term" data-poly="3a+2b+3" data-show="3a + 2b + 3"><div class="item-q">a) <span class="ausdruck">5a − 2b + 4b + 3 − 2a =</span></div><div class="item-in"><input type="text" id="t1a" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="term" data-poly="24ab" data-show="24ab"><div class="item-q">b) <span class="ausdruck">3a · 4b · 2 =</span></div><div class="item-in"><input type="text" id="t1b" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="term" data-poly="7a" data-show="7a"><div class="item-q">c) <span class="ausdruck">63a : 9 =</span></div><div class="item-in"><input type="text" id="t1c" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div></div>
+<div class="card"><div class="card-hdr acc">Aufgabe 2: Multipliziere und vereinfache</div><div class="card-body"><div class="item" data-type="term" data-poly="4x^2+13x+3" data-show="12x + 3 + 4x² + x = 4x² + 13x + 3" data-hint="Vier Produkte bilden, dann zusammenfassen."><div class="item-q">a) <span class="ausdruck">(3 + x) · (4x + 1) =</span></div><div class="item-in"><input type="text" id="t2a" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="term" data-poly="3a^2+10a-8" data-show="3a² + 12a − 2a − 8 = 3a² + 10a − 8" data-hint="Achte auf das Minus vor der 2."><div class="item-q">b) <span class="ausdruck">(3a − 2) · (a + 4) =</span></div><div class="item-in"><input type="text" id="t2b" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div></div>
+<div class="wahl-karte"><h3>Niveau</h3><p>G-Niveau oder M-Niveau. Ein Wechsel ist jederzeit möglich.</p><div class="wahl-btns"><button class="wahl-btn" data-group="w1" data-level="g" onclick="chooseLevel(this)">G-Niveau</button><button class="wahl-btn" data-group="w1" data-level="m" onclick="chooseLevel(this)">M-Niveau</button></div></div>
+<div class="niveau-panel" data-group="w1" data-level="g">
+<div class="card"><div class="card-hdr acc">Aufgabe 3: Klammern auflösen und vereinfachen</div><div class="card-body"><div class="item" data-type="term" data-poly="5x+5" data-show="7x − 2x + 5 = 5x + 5"><div class="item-q">a) <span class="ausdruck">7x − (2x − 5) =</span></div><div class="item-in"><input type="text" id="t3a_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="term" data-poly="10x-4" data-show="12x − 4 − 2x = 10x − 4"><div class="item-q">b) <span class="ausdruck">4 · (3x − 1) − 2x =</span></div><div class="item-in"><input type="text" id="t3b_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="term" data-poly="5x+3" data-show="2x + 6 + 3x − 3 = 5x + 3"><div class="item-q">c) <span class="ausdruck">2 · (x + 3) + 3 · (x − 1) =</span></div><div class="item-in"><input type="text" id="t3c_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div></div>
+<div class="formel"><strong>Tipp zum G-Niveau</strong><br>Löse zuerst die Klammern auf, fasse dann zusammen.</div>
+</div>
+<div class="niveau-panel" data-group="w1" data-level="m">
+<div class="formel"><strong>Binomische Formeln</strong><br>(a + b)² = a² + 2ab + b²<br>(a − b)² = a² − 2ab + b²<br>(a + b) · (a − b) = a² − b²</div>
+<div class="card"><div class="card-hdr acc">Aufgabe 3: Klammere einen möglichst großen Faktor aus</div><div class="card-body"><div class="item" data-type="faktor" data-poly="7x-28" data-inner="x-4" data-show="7 · (x − 4)"><div class="item-q">a) <span class="ausdruck">7x − 28 =</span></div><div class="item-in"><input type="text" id="t3a_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="faktor" data-poly="15xy-20x" data-inner="3y-4" data-show="5x · (3y − 4)"><div class="item-q">b) <span class="ausdruck">15xy − 20x =</span></div><div class="item-in"><input type="text" id="t3b_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="faktor" data-poly="24a^2b+36ab^2" data-inner="2a+3b" data-show="12ab · (2a + 3b)"><div class="item-q">c) <span class="ausdruck">24a²b + 36ab² =</span></div><div class="item-in"><input type="text" id="t3c_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div></div>
+<div class="card"><div class="card-hdr acc">Aufgabe 4: Binomische Formeln</div><div class="card-body"><div class="item" data-type="term" data-poly="x^2+12x+36" data-show="x² + 12x + 36"><div class="item-q">a) Multipliziere aus: <span class="ausdruck">(x + 6)² =</span></div><div class="item-in"><input type="text" id="t4a_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="faktor" data-poly="y^2-8y+16" data-inner="y-4" data-show="(y − 4)²"><div class="item-q">b) Schreibe als Produkt: <span class="ausdruck">y² − 8y + 16 =</span></div><div class="item-in"><input type="text" id="t4b_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="faktor" data-poly="25-4a^2" data-inner="5-2a|5+2a" data-show="(5 − 2a) · (5 + 2a)"><div class="item-q">c) Schreibe als Produkt: <span class="ausdruck">25 − 4a² =</span></div><div class="item-in"><input type="text" id="t4c_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div></div>
+</div>
+<div class="phase-score"></div>
+<div class="nav-row"><button class="btn btn-secondary" onclick="showPhase(1)">Zurück</button><button class="btn btn-primary" onclick="showPhase(3)">Weiter: Gleichungen</button></div>
+</section>
+<section class="phase-section" id="phase4">
+<div class="section-header"><div class="section-badge warm">4</div><div class="section-title"><h2>Gleichungen lösen und die Probe machen</h2><div class="meta">12 Min. | Einzelarbeit</div></div></div>
+<div class="formel"><strong>So löst du eine Gleichung</strong><br>1. Klammern auflösen<br>2. Gleichartige Glieder zusammenfassen<br>3. Umformen, bis x allein steht<br>4. Probe: Lösung in die Gleichung einsetzen, beide Seiten müssen gleich sein</div>
+<div class="card"><div class="card-hdr acc">Aufgabe 1: Gleichung mit Klammer und Probe</div><div class="card-body"><p>Löse die Gleichung <span class="ausdruck">3 · (x − 4) + 6 = 24</span> und mache die Probe.</p><textarea id="rw1" placeholder="Dein Rechenweg" oninput="unlockReveal('rw1','rbtn1','rhint1')"></textarea><div class="hint" id="rhint1">Schreibe mindestens 3 Zeichen, dann kannst du den Rechenweg aufdecken.</div><p style="margin-top:10px"><button class="btn btn-reveal" id="rbtn1" data-input="rw1" data-hint="rhint1" data-card="rloes1" disabled onclick="revealCard('rloes1','rbtn1')">Rechenweg aufdecken</button></p><div class="loesung" id="rloes1">3 · (x − 4) + 6 = 24<br>3x − 12 + 6 = 24<br>3x − 6 = 24 &nbsp;| + 6<br>3x = 30 &nbsp;| : 3<br>x = 10<br>Probe: 3 · (10 − 4) + 6 = 3 · 6 + 6 = 24. Beide Seiten sind gleich.</div><div class="item" data-type="num" data-ans="10" data-show="x = 10"><div class="item-q">Lösung: x =</div><div class="item-in"><input type="text" id="g1x" placeholder="Zahl" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="24" data-show="3 · 6 + 6 = 24"><div class="item-q">Probe, linke Seite ergibt:</div><div class="item-in"><input type="text" id="g1l" placeholder="Zahl" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="24" data-show="24"><div class="item-q">Probe, rechte Seite ergibt:</div><div class="item-in"><input type="text" id="g1r" placeholder="Zahl" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div></div>
+<div class="wahl-karte"><h3>Niveau</h3><p>G-Niveau oder M-Niveau. Ein Wechsel ist jederzeit möglich.</p><div class="wahl-btns"><button class="wahl-btn" data-group="w1" data-level="g" onclick="chooseLevel(this)">G-Niveau</button><button class="wahl-btn" data-group="w1" data-level="m" onclick="chooseLevel(this)">M-Niveau</button></div></div>
+<div class="niveau-panel" data-group="w1" data-level="g">
+<div class="card"><div class="card-hdr acc">Aufgabe 2: Löse die Gleichungen</div><div class="card-body"><div class="item" data-type="num" data-ans="5" data-show="3x = 15, also x = 5"><div class="item-q">a) <span class="ausdruck">3x + 5 = 20</span></div><div class="item-in"><input type="text" id="g2a_g" placeholder="Zahl" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="4" data-show="3x = 12, also x = 4"><div class="item-q">b) <span class="ausdruck">4x + 3 = x + 15</span></div><div class="item-in"><input type="text" id="g2b_g" placeholder="Zahl" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="6" data-show="2x + 6 = 18, also x = 6"><div class="item-q">c) <span class="ausdruck">2 · (x + 3) = 18</span></div><div class="item-in"><input type="text" id="g2c_g" placeholder="Zahl" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div></div>
+</div>
+<div class="niveau-panel" data-group="w1" data-level="m">
+<div class="card"><div class="card-hdr acc">Aufgabe 2: Löse die Gleichungen</div><div class="card-body"><div class="item" data-type="num" data-ans="6" data-show="3x = 18, also x = 6"><div class="item-q">a) <span class="ausdruck">5x − 7 = 2x + 11</span></div><div class="item-in"><input type="text" id="g2a_m" placeholder="Zahl" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="5" data-show="6x − 3 = 4x + 7, also x = 5"><div class="item-q">b) <span class="ausdruck">3 · (2x − 1) = 4 · (x + 3) − 5</span></div><div class="item-in"><input type="text" id="g2b_m" placeholder="Zahl" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="3" data-show="x² + 4x + 4 = x² + 16, also 4x = 12 und x = 3" data-hint="Die binomische Formel zuerst ausmultiplizieren: x² hebt sich auf beiden Seiten weg."><div class="item-q">c) <span class="ausdruck">(x + 2)² = x² + 16</span></div><div class="item-in"><input type="text" id="g2c_m" placeholder="Zahl" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="1.5" data-show="9x² − 1 = 9x² + 2x − 4, also 2x = 3 und x = 1,5" data-hint="Dezimalzahlen schreibst du mit Komma oder Punkt."><div class="item-q">d) <span class="ausdruck">(3x − 1) · (3x + 1) = 9x² + 2x − 4</span></div><div class="item-in"><input type="text" id="g2d_m" placeholder="Zahl" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div></div>
+</div>
+<div class="phase-score"></div>
+<div class="nav-row"><button class="btn btn-secondary" onclick="showPhase(2)">Zurück</button><button class="btn btn-primary" onclick="showPhase(4)">Weiter: Sachaufgaben und Flächen</button></div>
+</section>
+<section class="phase-section" id="phase5">
+<div class="section-header"><div class="section-badge ">5</div><div class="section-title"><h2>Sachaufgaben und Flächen</h2><div class="meta">13 Min. | Einzelarbeit</div></div></div>
+<div class="card"><div class="card-hdr acc">Aufgabe 1: Rechteck mit Umfang</div><div class="card-body"><p>Ein Rechteck ist dreimal so lang wie breit. Sein Umfang beträgt 48 cm. Die Breite nennst du x.</p><svg class="skizze" viewBox="0 0 320 150" role="img" aria-label="Planskizze eines Rechtecks"><rect x="50" y="35" width="230" height="80" fill="#E8F4F6" stroke="#2D6E7E" stroke-width="3"/><text x="165" y="26" text-anchor="middle" font-size="16" fill="#1C1C1A">Länge</text><text x="165" y="132" text-anchor="middle" font-size="16" fill="#1C1C1A">Länge</text><text x="44" y="80" text-anchor="end" font-size="16" fill="#1C1C1A">Breite x</text><text x="288" y="80" text-anchor="start" font-size="16" fill="#1C1C1A">Breite x</text></svg><div class="item" data-type="term0" data-poly="3x" data-show="3x"><div class="item-q">a) Beschrifte die Planskizze: Wie lang ist die Länge in Abhängigkeit von x?</div><div class="item-in"><input type="text" id="s1a" placeholder="Länge" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="quiz-q " id="qs1"><div class="frage">b) Welche Gleichung passt zum Umfang?</div><button class="opt" data-q="qs1" data-v="a" data-ok="0" onclick="answerQuiz(this)">A: x + 3x = 48</button><button class="opt" data-q="qs1" data-v="b" data-ok="1" onclick="answerQuiz(this)">B: 2 · (x + 3x) = 48</button><button class="opt" data-q="qs1" data-v="c" data-ok="0" onclick="answerQuiz(this)">C: 2 · 3x = 48</button></div>
+<div class="item" data-type="num" data-ans="6" data-show="8x = 48, also x = 6 cm"><div class="item-q">c) Berechne die Breite.</div><div class="item-in"><input type="text" id="s1c" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">cm</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="18" data-show="3 · 6 cm = 18 cm"><div class="item-q">d) Berechne die Länge.</div><div class="item-in"><input type="text" id="s1d" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">cm</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="108" data-show="6 cm · 18 cm = 108 cm²"><div class="item-q">e) Berechne den Flächeninhalt.</div><div class="item-in"><input type="text" id="s1e" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">cm²</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div></div>
+<div class="card"><div class="card-hdr acc">Aufgabe 2: Rechteck im Koordinatensystem</div><div class="card-body"><p>Das Rechteck ABCD hat die Eckpunkte A(1|1), B(6|1), C(6|5) und D(1|5). Zeichne zuerst selbst ein Koordinatensystem auf dein Blatt (1 Einheit entspricht 1 cm) und trage das Rechteck ein. Vergleiche dann mit der Abbildung.</p><svg class="skizze" style="max-width:380px" viewBox="0 0 330 285" role="img" aria-label="Koordinatensystem mit einem Rechteck"><line x1="34" y1="250" x2="34" y2="34" stroke="#999" stroke-width="1"/><text x="34" y="266" text-anchor="middle" font-size="13" fill="#1C1C1A">0</text><line x1="70" y1="250" x2="70" y2="34" stroke="#999" stroke-width="1"/><text x="70" y="266" text-anchor="middle" font-size="13" fill="#1C1C1A">1</text><line x1="106" y1="250" x2="106" y2="34" stroke="#999" stroke-width="1"/><text x="106" y="266" text-anchor="middle" font-size="13" fill="#1C1C1A">2</text><line x1="142" y1="250" x2="142" y2="34" stroke="#999" stroke-width="1"/><text x="142" y="266" text-anchor="middle" font-size="13" fill="#1C1C1A">3</text><line x1="178" y1="250" x2="178" y2="34" stroke="#999" stroke-width="1"/><text x="178" y="266" text-anchor="middle" font-size="13" fill="#1C1C1A">4</text><line x1="214" y1="250" x2="214" y2="34" stroke="#999" stroke-width="1"/><text x="214" y="266" text-anchor="middle" font-size="13" fill="#1C1C1A">5</text><line x1="250" y1="250" x2="250" y2="34" stroke="#999" stroke-width="1"/><text x="250" y="266" text-anchor="middle" font-size="13" fill="#1C1C1A">6</text><line x1="286" y1="250" x2="286" y2="34" stroke="#999" stroke-width="1"/><text x="286" y="266" text-anchor="middle" font-size="13" fill="#1C1C1A">7</text><line x1="34" y1="250" x2="286" y2="250" stroke="#999" stroke-width="1"/><text x="26" y="255" text-anchor="end" font-size="13" fill="#1C1C1A">0</text><line x1="34" y1="214" x2="286" y2="214" stroke="#999" stroke-width="1"/><text x="26" y="219" text-anchor="end" font-size="13" fill="#1C1C1A">1</text><line x1="34" y1="178" x2="286" y2="178" stroke="#999" stroke-width="1"/><text x="26" y="183" text-anchor="end" font-size="13" fill="#1C1C1A">2</text><line x1="34" y1="142" x2="286" y2="142" stroke="#999" stroke-width="1"/><text x="26" y="147" text-anchor="end" font-size="13" fill="#1C1C1A">3</text><line x1="34" y1="106" x2="286" y2="106" stroke="#999" stroke-width="1"/><text x="26" y="111" text-anchor="end" font-size="13" fill="#1C1C1A">4</text><line x1="34" y1="70" x2="286" y2="70" stroke="#999" stroke-width="1"/><text x="26" y="75" text-anchor="end" font-size="13" fill="#1C1C1A">5</text><line x1="34" y1="34" x2="286" y2="34" stroke="#999" stroke-width="1"/><text x="26" y="39" text-anchor="end" font-size="13" fill="#1C1C1A">6</text><line x1="34" y1="250" x2="300" y2="250" stroke="#1C1C1A" stroke-width="2.5"/><line x1="34" y1="250" x2="34" y2="20" stroke="#1C1C1A" stroke-width="2.5"/><text x="306" y="255" font-size="14" fill="#1C1C1A">x</text><text x="30" y="14" font-size="14" fill="#1C1C1A">y</text><polygon points="70,214 250,214 250,70 70,70" fill="#E8F4F6" fill-opacity="0.7" stroke="#2D6E7E" stroke-width="3"/><circle cx="70" cy="214" r="4" fill="#C8246A"/><text x="56" y="232" font-size="15" font-weight="bold" fill="#1C1C1A">A</text><circle cx="250" cy="214" r="4" fill="#C8246A"/><text x="258" y="232" font-size="15" font-weight="bold" fill="#1C1C1A">B</text><circle cx="250" cy="70" r="4" fill="#C8246A"/><text x="258" y="62" font-size="15" font-weight="bold" fill="#1C1C1A">C</text><circle cx="70" cy="70" r="4" fill="#C8246A"/><text x="54" y="62" font-size="15" font-weight="bold" fill="#1C1C1A">D</text></svg><div class="item" data-type="num" data-ans="6" data-show="C hat die Koordinaten C(6|5), die x-Koordinate ist 6"><div class="item-q">a) Lies die x-Koordinate des Punktes C ab.</div><div class="item-in"><input type="text" id="s2a" placeholder="Zahl" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="5" data-show="C(6|5), die y-Koordinate ist 5"><div class="item-q">b) Lies die y-Koordinate des Punktes C ab.</div><div class="item-in"><input type="text" id="s2b" placeholder="Zahl" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="18" data-show="AB = 5 cm, BC = 4 cm, also 2 · (5 cm + 4 cm) = 18 cm"><div class="item-q">c) Berechne den Umfang des Rechtecks.</div><div class="item-in"><input type="text" id="s2c" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">cm</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="20" data-show="5 cm · 4 cm = 20 cm²"><div class="item-q">d) Berechne den Flächeninhalt des Rechtecks.</div><div class="item-in"><input type="text" id="s2d" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">cm²</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div></div>
+<div class="wahl-karte"><h3>Niveau</h3><p>G-Niveau oder M-Niveau. Ein Wechsel ist jederzeit möglich.</p><div class="wahl-btns"><button class="wahl-btn" data-group="w1" data-level="g" onclick="chooseLevel(this)">G-Niveau</button><button class="wahl-btn" data-group="w1" data-level="m" onclick="chooseLevel(this)">M-Niveau</button></div></div>
+<div class="niveau-panel" data-group="w1" data-level="g">
+<div class="card"><div class="card-hdr acc">Aufgabe 3: Garten</div><div class="card-body"><p>Ein Garten ist 4 m länger als breit. Sein Umfang beträgt 36 m. Die Breite nennst du x.</p><div class="item" data-type="term0" data-poly="x+4" data-show="x + 4"><div class="item-q">a) Gib die Länge in Abhängigkeit von x an.</div><div class="item-in"><input type="text" id="s3a_g" placeholder="Länge" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="quiz-q " id="qs3_g"><div class="frage">b) Welche Gleichung passt zum Umfang?</div><button class="opt" data-q="qs3_g" data-v="a" data-ok="0" onclick="answerQuiz(this)">A: x + x + 4 = 36</button><button class="opt" data-q="qs3_g" data-v="b" data-ok="0" onclick="answerQuiz(this)">B: 2 · (x + 4) = 36</button><button class="opt" data-q="qs3_g" data-v="c" data-ok="1" onclick="answerQuiz(this)">C: 2 · (x + x + 4) = 36</button></div>
+<div class="item" data-type="num" data-ans="7" data-show="4x + 8 = 36, also x = 7 m"><div class="item-q">c) Berechne die Breite.</div><div class="item-in"><input type="text" id="s3c_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">m</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="11" data-show="7 m + 4 m = 11 m"><div class="item-q">d) Berechne die Länge.</div><div class="item-in"><input type="text" id="s3d_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">m</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="77" data-show="7 m · 11 m = 77 m²"><div class="item-q">e) Berechne den Flächeninhalt des Gartens.</div><div class="item-in"><input type="text" id="s3e_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">m²</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div></div>
+<div class="card"><div class="card-hdr acc">Aufgabe 4: Term für den Umfang</div><div class="card-body"><p>Ein Rechteck hat die Länge a + 3 und die Breite 4 (jeweils in cm).</p><div class="item" data-type="term" data-poly="2a+14" data-show="2 · (a + 3 + 4) = 2a + 14"><div class="item-q">a) Gib einen vereinfachten Term für den Umfang an.</div><div class="item-in"><input type="text" id="s4a_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="24" data-show="2 · 5 + 14 = 24 cm"><div class="item-q">b) Berechne den Umfang für a = 5.</div><div class="item-in"><input type="text" id="s4b_g" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">cm</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div></div>
+</div>
+<div class="niveau-panel" data-group="w1" data-level="m">
+<div class="card"><div class="card-hdr acc">Aufgabe 3: Radtour</div><div class="card-body"><p>Mia fährt an drei Tagen insgesamt 72 km Rad. Am 1. Tag fährt sie x km, am 2. Tag 4 km weniger als am 1. Tag, am 3. Tag doppelt so weit wie am 2. Tag.</p><div class="item" data-type="term0" data-poly="2*(x-4)" data-show="2 · (x − 4)"><div class="item-q">a) Gib die Strecke des 3. Tages in Abhängigkeit von x an.</div><div class="item-in"><input type="text" id="s3a_m" placeholder="Strecke Tag 3" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="quiz-q " id="qs3_m"><div class="frage">b) Welche Gleichung passt?</div><button class="opt" data-q="qs3_m" data-v="a" data-ok="1" onclick="answerQuiz(this)">A: x + (x − 4) + 2 · (x − 4) = 72</button><button class="opt" data-q="qs3_m" data-v="b" data-ok="0" onclick="answerQuiz(this)">B: x + (x − 4) + 2x = 72</button><button class="opt" data-q="qs3_m" data-v="c" data-ok="0" onclick="answerQuiz(this)">C: x + 4 + 2 · (x + 4) = 72</button></div>
+<div class="item" data-type="num" data-ans="21" data-show="4x − 12 = 72, also x = 21 km"><div class="item-q">c) Berechne x, also die Strecke des 1. Tages.</div><div class="item-in"><input type="text" id="s3c_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">km</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="17" data-show="21 km − 4 km = 17 km"><div class="item-q">d) Wie weit fährt Mia am 2. Tag?</div><div class="item-in"><input type="text" id="s3d_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">km</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="34" data-show="2 · 17 km = 34 km"><div class="item-q">e) Wie weit fährt Mia am 3. Tag?</div><div class="item-in"><input type="text" id="s3e_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">km</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div></div>
+<div class="card"><div class="card-hdr acc">Aufgabe 4: Term für den Flächeninhalt</div><div class="card-body"><p>Ein Rechteck hat die Seitenlängen x und x + 4 (jeweils in cm).</p><div class="item" data-type="term" data-poly="x^2+4x" data-show="x · (x + 4) = x² + 4x"><div class="item-q">a) Gib einen vereinfachten Term für den Flächeninhalt an.</div><div class="item-in"><input type="text" id="s4a_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+<div class="item" data-type="num" data-ans="60" data-show="6 · 10 = 60 cm²"><div class="item-q">b) Berechne den Flächeninhalt für x = 6.</div><div class="item-in"><input type="text" id="s4b_m" placeholder="Deine Antwort" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="unit">cm²</span><button class="btn btn-primary btn-sm" onclick="checkItem(this)">Prüfen</button></div><div class="tf-fb"></div></div>
+</div></div>
+</div>
+<div class="phase-score"></div>
+<div class="nav-row"><button class="btn btn-secondary" onclick="showPhase(3)">Zurück</button><button class="btn btn-primary" onclick="showPhase(5)">Weiter: Abschluss</button></div>
+</section>
+<section class="phase-section" id="phase6">
+<div class="section-header"><div class="section-badge green">6</div><div class="section-title"><h2>Abschluss</h2><div class="meta">8 Min. | Einzelarbeit</div></div></div>
+<div class="quiz-q abschluss" id="qa1"><div class="frage">Frage 1. Was ergibt −(5x − 3)?</div><button class="opt" data-q="qa1" data-v="a" data-ok="1" onclick="answerQuiz(this)">A: −5x + 3</button><button class="opt" data-q="qa1" data-v="b" data-ok="0" onclick="answerQuiz(this)">B: −5x − 3</button><button class="opt" data-q="qa1" data-v="c" data-ok="0" onclick="answerQuiz(this)">C: 5x + 3</button></div>
+<div class="quiz-q abschluss" id="qa2"><div class="frage">Frage 2. Was bedeutet die Probe bei einer Gleichung?</div><button class="opt" data-q="qa2" data-v="a" data-ok="0" onclick="answerQuiz(this)">A: Ich rechne die Gleichung noch einmal auf dieselbe Weise.</button><button class="opt" data-q="qa2" data-v="b" data-ok="1" onclick="answerQuiz(this)">B: Ich setze meine Lösung in die ursprüngliche Gleichung ein und prüfe, ob beide Seiten gleich sind.</button><button class="opt" data-q="qa2" data-v="c" data-ok="0" onclick="answerQuiz(this)">C: Ich runde das Ergebnis.</button></div>
+<div class="quiz-q abschluss" id="qa3"><div class="frage">Frage 3. Ein Rechteck ist 5 cm lang und 3 cm breit. Welchen Umfang hat es?</div><button class="opt" data-q="qa3" data-v="a" data-ok="0" onclick="answerQuiz(this)">A: 15 cm</button><button class="opt" data-q="qa3" data-v="b" data-ok="0" onclick="answerQuiz(this)">B: 8 cm</button><button class="opt" data-q="qa3" data-v="c" data-ok="1" onclick="answerQuiz(this)">C: 16 cm</button></div>
+<div class="quiz-q abschluss" id="qa4"><div class="frage">Frage 4. Ein Punkt hat die Koordinaten P(3|5). Wie findest du ihn im Koordinatensystem?</div><button class="opt" data-q="qa4" data-v="a" data-ok="1" onclick="answerQuiz(this)">A: 3 Einheiten nach rechts und 5 Einheiten nach oben</button><button class="opt" data-q="qa4" data-v="b" data-ok="0" onclick="answerQuiz(this)">B: 3 Einheiten nach oben und 5 Einheiten nach rechts</button><button class="opt" data-q="qa4" data-v="c" data-ok="0" onclick="answerQuiz(this)">C: 3 Einheiten nach links und 5 Einheiten nach unten</button></div>
+<div class="quiz-score" id="quizScore"></div>
+<p style="margin-top:18px"><strong>Wie sicher bist du jetzt?</strong> 1 bedeutet noch unsicher, 5 bedeutet sicher.</p><table class="stern-table"><tr><th>Ich kann ...</th><th>Selbsteinschätzung</th></tr><tr><td>Terme vereinfachen.</td><td><span class="sterne"><span class="stern" data-row="n1" data-n="1" onclick="setStern('n1',1)">1</span><span class="stern" data-row="n1" data-n="2" onclick="setStern('n1',2)">2</span><span class="stern" data-row="n1" data-n="3" onclick="setStern('n1',3)">3</span><span class="stern" data-row="n1" data-n="4" onclick="setStern('n1',4)">4</span><span class="stern" data-row="n1" data-n="5" onclick="setStern('n1',5)">5</span></span></td></tr><tr><td>Summen ausmultiplizieren.</td><td><span class="sterne"><span class="stern" data-row="n2" data-n="1" onclick="setStern('n2',1)">1</span><span class="stern" data-row="n2" data-n="2" onclick="setStern('n2',2)">2</span><span class="stern" data-row="n2" data-n="3" onclick="setStern('n2',3)">3</span><span class="stern" data-row="n2" data-n="4" onclick="setStern('n2',4)">4</span><span class="stern" data-row="n2" data-n="5" onclick="setStern('n2',5)">5</span></span></td></tr><tr><td>Gleichungen mit Klammern lösen und die Probe machen.</td><td><span class="sterne"><span class="stern" data-row="n3" data-n="1" onclick="setStern('n3',1)">1</span><span class="stern" data-row="n3" data-n="2" onclick="setStern('n3',2)">2</span><span class="stern" data-row="n3" data-n="3" onclick="setStern('n3',3)">3</span><span class="stern" data-row="n3" data-n="4" onclick="setStern('n3',4)">4</span><span class="stern" data-row="n3" data-n="5" onclick="setStern('n3',5)">5</span></span></td></tr><tr><td>Zu einer Sachaufgabe eine Gleichung aufstellen.</td><td><span class="sterne"><span class="stern" data-row="n4" data-n="1" onclick="setStern('n4',1)">1</span><span class="stern" data-row="n4" data-n="2" onclick="setStern('n4',2)">2</span><span class="stern" data-row="n4" data-n="3" onclick="setStern('n4',3)">3</span><span class="stern" data-row="n4" data-n="4" onclick="setStern('n4',4)">4</span><span class="stern" data-row="n4" data-n="5" onclick="setStern('n4',5)">5</span></span></td></tr><tr><td>Umfang und Flächeninhalt von Rechteck und Quadrat im Koordinatensystem berechnen.</td><td><span class="sterne"><span class="stern" data-row="n5" data-n="1" onclick="setStern('n5',1)">1</span><span class="stern" data-row="n5" data-n="2" onclick="setStern('n5',2)">2</span><span class="stern" data-row="n5" data-n="3" onclick="setStern('n5',3)">3</span><span class="stern" data-row="n5" data-n="4" onclick="setStern('n5',4)">4</span><span class="stern" data-row="n5" data-n="5" onclick="setStern('n5',5)">5</span></span></td></tr><tr><td>Ausklammern und binomische Formeln anwenden (M-Niveau).</td><td><span class="sterne"><span class="stern" data-row="n6" data-n="1" onclick="setStern('n6',1)">1</span><span class="stern" data-row="n6" data-n="2" onclick="setStern('n6',2)">2</span><span class="stern" data-row="n6" data-n="3" onclick="setStern('n6',3)">3</span><span class="stern" data-row="n6" data-n="4" onclick="setStern('n6',4)">4</span><span class="stern" data-row="n6" data-n="5" onclick="setStern('n6',5)">5</span></span></td></tr></table>
+<div class="card"><div class="card-hdr warm">Mein Übungsplan bis zur Klassenarbeit</div><div class="card-body"><p>Welche Aufgabentypen übst du bis zur Klassenarbeit noch einmal? Schreibe 2 bis 3 Stichworte.</p><textarea id="plan1" placeholder="Das übe ich noch"></textarea></div></div>
+<div class="quiz-score" id="gesamtScore"></div>
+<div class="lernziel-bar">Lernziel: Ich kann Terme vereinfachen und ausmultiplizieren, Gleichungen mit Klammern lösen und die Probe machen, zu Sachaufgaben Gleichungen aufstellen und Umfang und Flächeninhalt von Rechteck und Quadrat im Koordinatensystem berechnen.</div>
+<div class="nav-row"><button class="btn btn-secondary" onclick="showPhase(4)">Zurück</button><span></span></div>
+</section>
+
+<div class="footer"><button class="btn btn-reset" onclick="resetAll()">Alle Eingaben löschen</button></div>
+</main>
+<script>
+const KEY = 'mathe_kl8_uebung_ka_terme_gleichungen_v1';
+
+function emptyState(){ return {fields:{}, reveals:{}, choices:{}, sterne:{}, checked:{}, tries:{}}; }
+function readState(){
+  try { const s = JSON.parse(localStorage.getItem(KEY)); if (!s) return emptyState(); const e = emptyState(); Object.keys(e).forEach(k => { if (!s[k]) s[k] = e[k]; }); return s; }
+  catch(e){ return emptyState(); }
+}
+function writeState(s){ try { localStorage.setItem(KEY, JSON.stringify(s)); } catch(e){} }
+
+/* MATHE-CHECK-START */
+function normStr(s){
+  return String(s).replace(/\s+/g,'').replace(/[−–—]/g,'-').replace(/[·×∙]/g,'*')
+    .replace(/²/g,'^2').replace(/³/g,'^3').replace(/,/g,'.').replace(/:/g,'/').toLowerCase();
+}
+function keyParse(k){ const o={}; if(!k) return o; k.split(',').forEach(p=>{const q=p.split(':'); o[q[0]]=Number(q[1]);}); return o; }
+function keyBuild(o){ return Object.keys(o).filter(v=>o[v]!==0).sort().map(v=>v+':'+o[v]).join(','); }
+function pClean(p){ const r={}; Object.keys(p).forEach(k=>{ const v=Math.round(p[k]*1e9)/1e9; if(Math.abs(v)>1e-9) r[k]=v; }); return r; }
+function pAdd(p,q,sg){ const r=Object.assign({},p); Object.keys(q).forEach(k=>{ r[k]=(r[k]||0)+sg*q[k]; }); return pClean(r); }
+function pMul(p,q){
+  const r={};
+  Object.keys(p).forEach(k1=>Object.keys(q).forEach(k2=>{
+    const a=keyParse(k1), b=keyParse(k2);
+    Object.keys(b).forEach(v=>{ a[v]=(a[v]||0)+b[v]; });
+    const k=keyBuild(a); r[k]=(r[k]||0)+p[k1]*q[k2];
+  }));
+  return pClean(r);
+}
+function pEq(p,q){ const a=pClean(p), b=pClean(q); const ks=new Set(Object.keys(a).concat(Object.keys(b))); for(const k of ks){ if(Math.abs((a[k]||0)-(b[k]||0))>1e-7) return false; } return true; }
+function parsePoly(input){
+  const s = normStr(input); let i = 0;
+  function peek(){ return s[i]; }
+  function expr(){
+    let sg = 1;
+    if (peek()==='+'||peek()==='-'){ if(peek()==='-') sg=-1; i++; }
+    let r = pAdd({}, term(), sg);
+    while (peek()==='+'||peek()==='-'){ const o = s[i++]; r = pAdd(r, term(), o==='-'?-1:1); }
+    return r;
+  }
+  function term(){
+    let r = power();
+    for(;;){
+      const c = peek();
+      if (c==='*'){ i++; r = pMul(r, power()); }
+      else if (c==='/'){ i++; const d = power(); const ks = Object.keys(d); if (ks.length!==1 || ks[0]!=='' || d['']===0) throw new Error('Division'); r = pClean(Object.fromEntries(Object.keys(r).map(k=>[k, r[k]/d['']]))); }
+      else if (c && (/[a-z0-9(]/).test(c)){ r = pMul(r, power()); }
+      else break;
+    }
+    return r;
+  }
+  function power(){
+    let b = atom();
+    if (peek()==='^'){ i++; const m = /^\d+/.exec(s.slice(i)); if(!m) throw new Error('Exponent'); i += m[0].length; let r={'':1}; for(let n=0;n<Number(m[0]);n++) r=pMul(r,b); b=r; }
+    return b;
+  }
+  function atom(){
+    const c = peek();
+    if (c==='-'){ i++; return pAdd({}, power(), -1); }
+    if (c==='+'){ i++; return power(); }
+    if (c==='('){ i++; const r = expr(); if (peek()!==')') throw new Error('Klammer'); i++; return r; }
+    if (c && /[a-z]/.test(c)){ i++; const o={}; o[c]=1; const r={}; r[keyBuild(o)]=1; return r; }
+    const m = /^\d+(\.\d+)?/.exec(s.slice(i));
+    if (m){ i += m[0].length; return {'': Number(m[0])}; }
+    throw new Error('Zeichen');
+  }
+  if (!s.length) throw new Error('leer');
+  const r = expr();
+  if (i !== s.length) throw new Error('Rest');
+  return r;
+}
+function topGroups(input){
+  const s = normStr(input), out = []; let depth = 0, start = -1;
+  for (let i=0;i<s.length;i++){
+    if (s[i]==='('){ if(depth===0) start=i+1; depth++; }
+    else if (s[i]===')'){ depth--; if(depth===0) out.push(s.slice(start,i)); }
+  }
+  return out;
+}
+function parseNum(input){
+  let s = normStr(input).replace(/^[a-z]+=/,'').replace(/[a-zäöü]+(\^2)?$/,'');
+  if (!/^-?\d+(\.\d+)?$/.test(s)) return NaN;
+  return Number(s);
+}
+/* Rückgabe: {ok:boolean, msg:string} */
+function evalAnswer(type, value, poly, ans, inner){
+  if (!String(value).trim()) return {ok:false, msg:'Schreibe zuerst deine Antwort.'};
+  if (type === 'num'){
+    const n = parseNum(value);
+    if (isNaN(n)) return {ok:false, msg:'Gib eine Zahl ein.'};
+    const ok = String(ans).split('|').some(a => Math.abs(Number(a)-n) < 1e-6);
+    return {ok:ok, msg: ok ? '' : 'Noch nicht ganz.'};
+  }
+  let u;
+  try { u = parsePoly(value); } catch(e){ return {ok:false, msg:'Das kann ich nicht lesen. Schreibe zum Beispiel 3x + 2 oder x^2 + 5x.'}; }
+  const exp = parsePoly(poly);
+  if (!pEq(u, exp)) return {ok:false, msg:'Noch nicht ganz.'};
+  if (type === 'term0') return {ok:true, msg:''};
+  if (type === 'term'){
+    const n = normStr(value);
+    if (n.indexOf('(') >= 0) return {ok:false, msg:'Richtiger Wert, aber löse die Klammern noch auf.'};
+    if (n.indexOf('/') >= 0) return {ok:false, msg:'Richtiger Wert, aber rechne die Division noch aus.'};
+    const tokens = n.split(/(?=[+-])/).filter(t => t.length);
+    if (tokens.length > Object.keys(exp).length) return {ok:false, msg:'Richtiger Wert, aber fasse noch gleichartige Glieder zusammen.'};
+    return {ok:true, msg:''};
+  }
+  if (type === 'faktor'){
+    const groups = topGroups(value);
+    if (!groups.length) return {ok:false, msg:'Richtiger Wert, aber schreibe das Ergebnis als Produkt mit Klammer.'};
+    const inners = String(inner).split('|').map(parsePoly);
+    const hit = groups.some(g => { try { const gp = parsePoly(g); return inners.some(ip => pEq(gp, ip) || pEq(gp, pAdd({}, ip, -1))); } catch(e){ return false; } });
+    if (!hit) return {ok:false, msg:'Richtiger Wert, aber klammere einen möglichst großen Faktor aus.'};
+    return {ok:true, msg:''};
+  }
+  return {ok:false, msg:'Noch nicht ganz.'};
+}
+/* MATHE-CHECK-END */
+
+function itemEl(el){ return el.closest('.item'); }
+function itemInput(item){ return item.querySelector('input[type=text]'); }
+function showResult(item, res, tries){
+  const fb = item.querySelector('.tf-fb');
+  item.classList.toggle('ok', res.ok);
+  item.classList.toggle('bad', !res.ok);
+  let t = res.ok ? 'Richtig. ' + (item.dataset.fb || '') : res.msg + (item.dataset.hint ? ' ' + item.dataset.hint : '');
+  if (!res.ok && tries >= 2 && item.dataset.show) t += ' Lösung: ' + item.dataset.show;
+  fb.textContent = t.trim();
+}
+function runItem(item){
+  const inp = itemInput(item);
+  return evalAnswer(item.dataset.type, inp.value, item.dataset.poly, item.dataset.ans, item.dataset.inner);
+}
+function checkItem(btn){
+  const item = itemEl(btn), inp = itemInput(item), s = readState();
+  const res = runItem(item);
+  if (!String(inp.value).trim()){ showResult(item, res, 0); return; }
+  s.checked[inp.id] = res.ok ? 'ok' : 'bad';
+  if (!res.ok) s.tries[inp.id] = (s.tries[inp.id] || 0) + 1;
+  writeState(s); save();
+  showResult(item, res, s.tries[inp.id] || 0);
+  updateTotals();
+}
+function restoreItems(){
+  const s = readState();
+  document.querySelectorAll('.item').forEach(item => {
+    const inp = itemInput(item); if (!inp || !s.checked[inp.id] || !String(inp.value).trim()) return;
+    showResult(item, runItem(item), s.tries[inp.id] || 0);
+  });
+  updateTotals();
+}
+function updateTotals(){
+  const s = readState();
+  document.querySelectorAll('.phase-score').forEach(el => {
+    const sec = el.closest('.phase-section');
+    const items = [...sec.querySelectorAll('.item')].filter(it => !it.closest('.niveau-panel:not(.shown)'));
+    const ok = items.filter(it => s.checked[itemInput(it).id] === 'ok').length;
+    el.textContent = ok ? 'Richtig gelöst in dieser Phase: ' + ok + ' von ' + items.length : '';
+  });
+  const gesamt = document.getElementById('gesamtScore');
+  if (gesamt){
+    const items = [...document.querySelectorAll('.item')].filter(it => !it.closest('.niveau-panel:not(.shown)'));
+    const ok = items.filter(it => s.checked[itemInput(it).id] === 'ok').length;
+    gesamt.textContent = 'Insgesamt richtig gelöst: ' + ok + ' von ' + items.length + ' Aufgaben.';
+  }
+}
+
+function showPhase(idx){
+  document.querySelectorAll('.phase-section').forEach((s,i) => s.classList.toggle('active', i===idx));
+  document.querySelectorAll('.phase-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  window.scrollTo(0,0);
+  updateTotals();
+}
+function save(){
+  const s = readState();
+  document.querySelectorAll('input[id],textarea[id],select[id],[contenteditable][id]').forEach(el => {
+    if (el.type === 'checkbox' || el.type === 'radio') s.fields[el.id] = el.checked;
+    else if (el.isContentEditable) s.fields[el.id] = el.innerHTML;
+    else s.fields[el.id] = el.value;
+  });
+  writeState(s);
+}
+function saveEditable(el){ save(); }
+function loadAll(){
+  const s = readState();
+  Object.keys(s.fields).forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (el.type === 'checkbox' || el.type === 'radio') el.checked = !!s.fields[id];
+    else if (el.isContentEditable) el.innerHTML = s.fields[id];
+    else el.value = s.fields[id];
+  });
+  restoreChoices(s);
+  restoreRevealBtns();
+  restoreItems();
+}
+function unlockReveal(inputId, btnId, hintId){
+  const inp = document.getElementById(inputId), btn = document.getElementById(btnId), hint = document.getElementById(hintId);
+  if (!inp || !btn) return;
+  const ok = (inp.value || '').trim().length >= 3;
+  btn.disabled = !ok;
+  if (hint) hint.style.display = ok ? 'none' : 'block';
+}
+function revealCard(cardId, btnId){
+  const card = document.getElementById(cardId), btn = document.getElementById(btnId);
+  if (card) card.classList.add('shown');
+  if (btn) btn.style.display = 'none';
+  const s = readState(); s.reveals[cardId] = true; writeState(s);
+}
+function restoreRevealBtns(){
+  const s = readState();
+  document.querySelectorAll('.btn-reveal[data-input]').forEach(btn => {
+    unlockReveal(btn.dataset.input, btn.id, btn.dataset.hint);
+    if (s.reveals[btn.dataset.card]) revealCard(btn.dataset.card, btn.id);
+  });
+}
+function resetAll(){
+  if (!confirm('Alle Eingaben dieser Einheit werden gelöscht. Fortfahren?')) return;
+  try { localStorage.removeItem(KEY); } catch(e){}
+  location.reload();
+}
+function answerQuiz(btn){
+  const s = readState(), q = btn.dataset.q;
+  if (s.choices[q]) return;
+  s.choices[q] = btn.dataset.v; writeState(s);
+  markQuiz(q, btn.dataset.v); updateScore();
+}
+function markQuiz(q, v){
+  document.querySelectorAll('.opt[data-q="'+q+'"]').forEach(o => {
+    o.disabled = true;
+    if (o.dataset.ok === '1') o.classList.add('richtig');
+    else if (o.dataset.v === v) o.classList.add('falsch');
+  });
+}
+function updateScore(){
+  const el = document.getElementById('quizScore'); if (!el) return;
+  const s = readState();
+  const opts = [...document.querySelectorAll('.opt')].filter(o => !o.closest('.niveau-panel:not(.shown)'));
+  const qs = new Set(opts.map(o => o.dataset.q));
+  let right = 0, done = 0;
+  qs.forEach(q => { if (s.choices[q]) { done++; const o = document.querySelector('.opt[data-q="'+q+'"][data-v="'+s.choices[q]+'"]'); if (o && o.dataset.ok === '1') right++; } });
+  el.textContent = done ? 'Punktestand bei den Fragen: ' + right + ' von ' + qs.size : '';
+}
+function setStern(id, n){ const s = readState(); s.sterne[id] = n; writeState(s); paintStern(id, n); }
+function paintStern(id, n){ document.querySelectorAll('.stern[data-row="'+id+'"]').forEach(st => st.classList.toggle('on', Number(st.dataset.n) <= n)); }
+function chooseLevel(btn){
+  const g = btn.dataset.group, lvl = btn.dataset.level;
+  const s = readState(); s.choices['wahl_'+g] = lvl; writeState(s);
+  applyLevel(g, lvl);
+}
+function applyLevel(g, lvl){
+  document.querySelectorAll('.niveau-panel[data-group="'+g+'"]').forEach(p => p.classList.toggle('shown', p.dataset.level === lvl));
+  document.querySelectorAll('.wahl-btn[data-group="'+g+'"]').forEach(b => { const on = b.dataset.level === lvl; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+  updateTotals(); updateScore();
+}
+function restoreChoices(s){
+  Object.keys(s.choices).forEach(id => {
+    if (id.indexOf('wahl_') === 0){ applyLevel(id.slice(5), s.choices[id]); return; }
+    markQuiz(id, s.choices[id]);
+  });
+  Object.keys(s.sterne).forEach(id => paintStern(id, s.sterne[id]));
+  updateScore();
+}
+
+/* Stoppuhr für Teil A */
+let timerSec = 600, timerId = null;
+function timerShow(){
+  const el = document.getElementById('timer'); if (!el) return;
+  const m = Math.floor(timerSec/60), s = timerSec % 60;
+  el.textContent = m + ':' + (s<10?'0':'') + s;
+  el.classList.toggle('ende', timerSec === 0);
+}
+function timerStart(){
+  if (timerId) return;
+  if (timerSec === 0) timerSec = 600;
+  timerId = setInterval(() => { if (timerSec > 0) timerSec--; timerShow(); if (timerSec === 0) timerStop(); }, 1000);
+}
+function timerStop(){ if (timerId){ clearInterval(timerId); timerId = null; } }
+function timerReset(){ timerStop(); timerSec = 600; timerShow(); }
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadAll();
+  document.addEventListener('input', save);
+  timerShow();
+});
+</script>
+</body>
+</html>
