@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Word-Anleitung Rezept und Menükarte, AES Klasse 7</title><style>
+
+:root {
+  --hdr:  #2D6E7E;
+  --acc:  #C8246A;
+  --hl:   #E8789A;
+  --bg:   #EBF4F6;
+  --wht:  #FFFFFF;
+  --grey: #5A6475;
+  --dark: #1C1C1A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Calibri, 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--dark); font-size: 15px; line-height: 1.65; }
+
+.app-header { background: var(--hdr); color: var(--wht); padding: 14px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+.app-header .title { font-size: 1.05rem; font-weight: 700; }
+.app-header .sub   { font-size: .8rem; opacity: .85; }
+
+.nav-bar { background: var(--wht); border-bottom: 2px solid var(--hl); display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 12px; position: sticky; top: 52px; z-index: 99; }
+.phase-btn { background: transparent; border: 2px solid var(--grey); border-radius: 20px; color: var(--grey); cursor: pointer; font-size: .78rem; font-weight: 600; padding: 4px 12px; transition: all .2s; }
+.phase-btn:hover  { border-color: var(--hdr); color: var(--hdr); }
+.phase-btn.active { background: var(--hdr); border-color: var(--hdr); color: var(--wht); }
+
+.phase-section { display: none; padding: 20px 16px 40px; max-width: 780px; margin: 0 auto; }
+.phase-section.active { display: block; }
+
+.section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.badge { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; color: var(--wht); flex-shrink: 0; background: var(--hdr); }
+.badge.acc  { background: var(--acc); }
+.section-title h2  { font-size: 1.2rem; font-weight: 700; color: var(--hdr); }
+.section-title .meta { font-size: .82rem; color: var(--grey); }
+
+/* ── Word-Box ── */
+.word-box { background: #E3F2FD; border: 2px solid #1565C0; border-radius: 10px; padding: 16px 18px; margin-bottom: 16px; }
+.word-label { color: #1565C0; font-weight: 700; font-size: .88rem; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.word-section { font-weight: 700; color: #1565C0; font-size: .88rem; margin: 12px 0 6px; }
+.word-steps { list-style: none; display: flex; flex-direction: column; gap: 9px; margin: 0; padding: 0; }
+.word-step  { display: flex; align-items: flex-start; gap: 10px; font-size: .92rem; line-height: 1.5; }
+.word-step-nr { background: #1565C0; color: #fff; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+.word-key { display: inline-block; background: #fff; border: 1.5px solid #90CAF9; border-radius: 4px; color: #0D47A1; font-family: monospace; font-size: .83rem; font-weight: 700; padding: 1px 7px; }
+.key-pos  { font-size: .75rem; color: var(--grey); font-style: italic; }
+.word-click { display: inline-block; background: #BBDEFB; border-radius: 4px; color: #0D47A1; font-size: .83rem; font-weight: 700; padding: 1px 8px; }
+.word-tip { background: #FFF9C4; border-left: 3px solid #F9A825; border-radius: 4px; color: #4A3000; font-size: .84rem; margin-top: 10px; padding: 7px 11px; }
+.word-divider { border: none; border-top: 1px dashed #90CAF9; margin: 10px 0; }
+
+.nav-row { display: flex; gap: 12px; justify-content: space-between; margin-top: 28px; }
+.btn { border: none; border-radius: 24px; cursor: pointer; font-family: inherit; font-size: .88rem; font-weight: 700; padding: 9px 24px; transition: opacity .15s, transform .1s; }
+.btn:hover { opacity: .87; transform: translateY(-1px); }
+.btn-primary   { background: var(--hdr); color: var(--wht); }
+.btn-secondary { background: var(--wht); border: 2px solid var(--hdr); color: var(--hdr); }
+
+@media (max-width: 560px) { .nav-row { flex-direction: column; } }
+
+.app-header { position: static; } .nav-bar { top: 0; }
+body { font-size: 17px; } .word-step { font-size: 1rem; cursor: pointer; }
+.word-step input { width: 20px; height: 20px; margin-top: 3px; flex-shrink: 0; }
+.word-step input:checked ~ div:last-child { opacity: .45; }
+.help { background:#fff; border:2px solid var(--acc); border-radius:10px; margin:12px auto 0; max-width:748px; padding:8px 14px; }
+.help summary { cursor:pointer; font-weight:700; color:var(--acc); }
+.help li { margin-left:20px; }
+.saved { font-size:.88rem; }
+
+</style></head><body>
+<div class="app-header"><div class="title">Rezeptblatt und Menükarte in Word</div><div class="sub">AES Klasse 7 · Schloss-Realschule</div></div><div class="nav-bar">
+<button class="phase-btn active" onclick="showPhase(0)">Start</button>
+<button class="phase-btn" onclick="showPhase(1)">1 Text</button>
+<button class="phase-btn" onclick="showPhase(2)">2 Geräte</button>
+<button class="phase-btn" onclick="showPhase(3)">3 Zutaten</button>
+<button class="phase-btn" onclick="showPhase(4)">4 Formatieren</button>
+<button class="phase-btn" onclick="showPhase(5)">5 Bild</button>
+<button class="phase-btn" onclick="showPhase(6)">6 Menükarte</button>
+<button class="phase-btn" onclick="showPhase(7)">7 Abgabe</button>
+</div><details class="help"><summary>Hilfe: Wenn etwas schiefgeht</summary><ul><li><strong>Etwas ist weg oder falsch:</strong> Klicke oben auf den gebogenen Pfeil nach links (Rückgängig). Das geht auch mit Strg und Z.</li><li><strong>Zeile markieren:</strong> dreimal schnell hineinklicken.</li><li><strong>Ein Wort markieren:</strong> zweimal schnell darauf klicken.</li><li><strong>Fett:</strong> im Reiter Start auf das fette F klicken. Noch ein Klick schaltet Fett aus.</li><li><strong>Neue Zeile:</strong> Enter. Vorher nichts markiert lassen.</li></ul></details>
+<section class="phase-section active" id="phase0"><div class="section-header"><div class="badge">0</div><div class="section-title"><h2>Los geht’s</h2><div class="meta">Hake jeden Schritt ab.</div></div></div><div class="word-box">
+<p class="word-section">Word öffnen und sofort speichern</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="0"><div class="word-step-nr">1</div><div>Öffne Word.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="1"><div class="word-step-nr">2</div><div>Klicke auf <span class="word-click">Neues leeres Dokument</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="2"><div class="word-step-nr">3</div><div>Klicke auf <span class="word-click">Datei</span> → <span class="word-click">Speichern unter</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="3"><div class="word-step-nr">4</div><div>Speichere die Datei so: <em>Nachname_Vorname_Rezept</em></div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="4"><div class="word-step-nr">5</div><div>Stelle dein iPad mit dieser Anleitung neben den Bildschirm. In Word arbeitest du am PC.</div></label></li>
+</ul>
+<div class="word-tip">Speichere nach jedem Teil: Halte Strg gedrückt und drücke S.</div>
+</div><div class="nav-row"><span></span><button class="btn btn-primary" onclick="showPhase(1)">Weiter</button></div></section>
+<section class="phase-section" id="phase1"><div class="section-header"><div class="badge">1</div><div class="section-title"><h2>Zuerst nur tippen: Titel und Grundinfos</h2><div class="meta">Hake jeden Schritt ab.</div></div></div><div class="word-box">
+<p class="word-section">Noch nichts formatieren. Nach jeder Zeile Enter drücken.</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="5"><div class="word-step-nr">1</div><div>Tippe den Namen deines Gerichts. Das ist dein Titel.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="6"><div class="word-step-nr">2</div><div>Tippe: <em>1. Grundinformationen</em></div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="7"><div class="word-step-nr">3</div><div>Tippe: <em>Vorbereitungszeit:</em> und dahinter die Zeit aus dem Rezept.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="8"><div class="word-step-nr">4</div><div>Tippe: <em>Zubereitungszeit:</em> und dahinter die Zeit aus dem Rezept.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="9"><div class="word-step-nr">5</div><div>Tippe: <em>Portionen:</em> und dahinter die Anzahl.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="10"><div class="word-step-nr">6</div><div>Tippe: <em>2. Vorbereitungsarbeit: Geräte herrichten</em> (drücke danach Enter)</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="11"><div class="word-step-nr">7</div><div>Speichere mit Strg und S.</div></label></li>
+</ul>
+<div class="word-tip">Alles sieht noch gleich aus? Das ist richtig. Formatiert wird erst in Teil 4.</div>
+</div><div class="nav-row"><button class="btn btn-secondary" onclick="showPhase(0)">Zurück</button><button class="btn btn-primary" onclick="showPhase(2)">Weiter</button></div></section>
+<section class="phase-section" id="phase2"><div class="section-header"><div class="badge">2</div><div class="section-title"><h2>Tabelle Geräte herrichten ausfüllen</h2><div class="meta">Hake jeden Schritt ab.</div></div></div><div class="word-box">
+<p class="word-section">Tabelle einfügen</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="12"><div class="word-step-nr">1</div><div>Klicke auf <span class="word-click">Einfügen</span> → <span class="word-click">Tabelle</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="13"><div class="word-step-nr">2</div><div>Wähle <strong>2 Spalten und 5 Zeilen</strong>.</div></label></li>
+</ul>
+<p class="word-section">Linke Spalte tippen</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="14"><div class="word-step-nr">1</div><div>Zeile 1: <em>Geräte herrichten</em> (die rechte Zelle bleibt leer)</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="15"><div class="word-step-nr">2</div><div>Zeile 2: <em>Immer dabei</em></div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="16"><div class="word-step-nr">3</div><div>Zeile 3: <em>Zur Vorbereitung</em></div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="17"><div class="word-step-nr">4</div><div>Zeile 4: <em>Zum Zerkleinern</em></div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="18"><div class="word-step-nr">5</div><div>Zeile 5: <em>Zur Zubereitung</em></div></label></li>
+</ul>
+<p class="word-section">Rechte Spalte tippen</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="19"><div class="word-step-nr">1</div><div>Schreibe neben <em>Immer dabei</em>: Abfallschüssel, Ordnungstopf, Probier-Esslöffel</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="20"><div class="word-step-nr">2</div><div>Lies dein Rezept. Schreibe jedes Gerät in die passende Zeile.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="21"><div class="word-step-nr">3</div><div>Brauchst du in einer Zeile kein Gerät, dann schreibe <em>entfällt</em>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="22"><div class="word-step-nr">4</div><div>Speichere mit Strg und S.</div></label></li>
+</ul>
+<div class="word-tip">Hilfe beim Zuordnen. Zur Vorbereitung: Küchenschüssel, Küchenwaage, Messbecher. Zum Zerkleinern: Schneidebrett, Küchenmesser, Reibe, Pürierstab. Zur Zubereitung: Kochtopf, Pfanne, Backblech, Kochlöffel, Wender.</div>
+</div><div class="nav-row"><button class="btn btn-secondary" onclick="showPhase(1)">Zurück</button><button class="btn btn-primary" onclick="showPhase(3)">Weiter</button></div></section>
+<section class="phase-section" id="phase3"><div class="section-header"><div class="badge">3</div><div class="section-title"><h2>Tabelle Zutaten und Zubereitung ausfüllen</h2><div class="meta">Hake jeden Schritt ab.</div></div></div><div class="word-box">
+<p class="word-section">Überschrift tippen</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="23"><div class="word-step-nr">1</div><div>Klicke direkt unter die erste Tabelle.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="24"><div class="word-step-nr">2</div><div>Tippe: <em>3. Zubereitungsarbeiten</em> (drücke danach Enter)</div></label></li>
+</ul>
+<p class="word-section">Tabelle einfügen</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="25"><div class="word-step-nr">1</div><div>Klicke auf <span class="word-click">Einfügen</span> → <span class="word-click">Tabelle</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="26"><div class="word-step-nr">2</div><div>Wähle <strong>2 Spalten und 8 Zeilen</strong>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="27"><div class="word-step-nr">3</div><div>Tippe in die erste Zeile links <em>Zutaten (mit Menge)</em> und rechts <em>Zubereitung</em>.</div></label></li>
+</ul>
+<p class="word-section">Rezept eintippen</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="28"><div class="word-step-nr">1</div><div>Links: Menge und Zutat. Rechts: der passende Arbeitsschritt mit Nummer.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="29"><div class="word-step-nr">2</div><div>Mit der Tab-Taste springst du in die nächste Zelle.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="30"><div class="word-step-nr">3</div><div>Ein Schritt ohne neue Zutat steht rechts. Die linke Zelle bleibt leer.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="31"><div class="word-step-nr">4</div><div>Du brauchst mehr Zeilen? Drücke in der letzten Zelle die Tab-Taste.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="32"><div class="word-step-nr">5</div><div>Lies alles noch einmal. Prüfe die Rechtschreibung.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="33"><div class="word-step-nr">6</div><div>Speichere mit Strg und S.</div></label></li>
+</ul>
+<div class="word-tip">Leere Zeile löschen: Rechtsklick auf die Zeile, dann Zeilen löschen.</div>
+</div><div class="nav-row"><button class="btn btn-secondary" onclick="showPhase(2)">Zurück</button><button class="btn btn-primary" onclick="showPhase(4)">Weiter</button></div></section>
+<section class="phase-section" id="phase4"><div class="section-header"><div class="badge">4</div><div class="section-title"><h2>Jetzt formatieren</h2><div class="meta">Hake jeden Schritt ab.</div></div></div><div class="word-box">
+<p class="word-section">Titel</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="34"><div class="word-step-nr">1</div><div>Klicke dreimal schnell auf den Titel. Die Zeile ist jetzt markiert.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="35"><div class="word-step-nr">2</div><div>Reiter <span class="word-click">Start</span>: Klicke in das Feld für die Schriftgröße. Tippe <strong>20</strong> und drücke Enter.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="36"><div class="word-step-nr">3</div><div>Klicke auf das fette <span class="word-click">F</span>.</div></label></li>
+</ul>
+<p class="word-section">Die drei Überschriften</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="37"><div class="word-step-nr">1</div><div>Klicke dreimal schnell auf <em>1. Grundinformationen</em>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="38"><div class="word-step-nr">2</div><div>Stelle die Schriftgröße auf <strong>14</strong>. Klicke auf <span class="word-click">F</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="39"><div class="word-step-nr">3</div><div>Mache das Gleiche mit <em>2. Vorbereitungsarbeit: Geräte herrichten</em>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="40"><div class="word-step-nr">4</div><div>Mache das Gleiche mit <em>3. Zubereitungsarbeiten</em>.</div></label></li>
+</ul>
+<p class="word-section">Grundinfos</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="41"><div class="word-step-nr">1</div><div>Markiere mit der Maus nur <em>Vorbereitungszeit:</em>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="42"><div class="word-step-nr">2</div><div>Klicke auf <span class="word-click">F</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="43"><div class="word-step-nr">3</div><div>Mache das Gleiche mit <em>Zubereitungszeit:</em>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="44"><div class="word-step-nr">4</div><div>Mache das Gleiche mit <em>Portionen:</em>.</div></label></li>
+</ul>
+<p class="word-section">Tabelle Geräte herrichten</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="45"><div class="word-step-nr">1</div><div>Markiere beide Zellen der ersten Zeile: Ziehe mit gedrückter linker Maustaste von links nach rechts.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="46"><div class="word-step-nr">2</div><div>Klicke mit der rechten Maustaste auf die Markierung. Wähle <span class="word-click">Zellen verbinden</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="47"><div class="word-step-nr">3</div><div>Die Zeile bleibt markiert. Klicke auf <span class="word-click">F</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="48"><div class="word-step-nr">4</div><div>Markiere in der linken Spalte jedes Wort der Zeilen 2 bis 5 und mache es fett.</div></label></li>
+</ul>
+<p class="word-section">Tabelle Zutaten und Zubereitung</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="49"><div class="word-step-nr">1</div><div>Markiere die erste Zeile. Klicke auf <span class="word-click">F</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="50"><div class="word-step-nr">2</div><div>Fahre mit der Maus auf die Linie zwischen den Spalten, bis ein Doppelpfeil erscheint.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="51"><div class="word-step-nr">3</div><div>Ziehe die Linie nach links. Die rechte Spalte soll breiter sein.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="52"><div class="word-step-nr">4</div><div>Speichere mit Strg und S.</div></label></li>
+</ul>
+<div class="word-tip">Beim Formatieren drückst du nicht die Enter-Taste, solange Text markiert ist. Sonst verschwindet er. Dann klicke auf Rückgängig. Nur im Feld für die Schriftgröße darfst du Enter drücken.</div>
+</div><div class="nav-row"><button class="btn btn-secondary" onclick="showPhase(3)">Zurück</button><button class="btn btn-primary" onclick="showPhase(5)">Weiter</button></div></section>
+<section class="phase-section" id="phase5"><div class="section-header"><div class="badge">5</div><div class="section-title"><h2>Ein Bild einfügen</h2><div class="meta">Hake jeden Schritt ab.</div></div></div><div class="word-box">
+<p class="word-section">Bild im Internet suchen</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="53"><div class="word-step-nr">1</div><div>Du darfst ein Bild im Internet suchen. Öffne dafür am PC den Browser.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="54"><div class="word-step-nr">2</div><div>Suche nach dem Namen deines Gerichts. Klicke auf <span class="word-click">Bilder</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="55"><div class="word-step-nr">3</div><div>Klicke mit der rechten Maustaste auf ein passendes Bild. Wähle <span class="word-click">Bild speichern unter</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="56"><div class="word-step-nr">4</div><div>Merke dir, wo du das Bild speicherst.</div></label></li>
+</ul>
+<p class="word-section">Bild in Word einfügen</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="57"><div class="word-step-nr">1</div><div>Klicke in Word ans Ende der Titelzeile.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="58"><div class="word-step-nr">2</div><div>Klicke auf <span class="word-click">Einfügen</span> → <span class="word-click">Bilder</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="59"><div class="word-step-nr">3</div><div>Wähle <span class="word-click">Dieses Gerät</span>. Wähle dein gespeichertes Bild und füge es ein.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="60"><div class="word-step-nr">4</div><div>Ist das Bild zu groß? Klicke es an. Ziehe einen <strong>Eckpunkt</strong> nach innen.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="61"><div class="word-step-nr">5</div><div>Speichere mit Strg und S.</div></label></li>
+</ul>
+</div><div class="nav-row"><button class="btn btn-secondary" onclick="showPhase(4)">Zurück</button><button class="btn btn-primary" onclick="showPhase(6)">Weiter</button></div></section>
+<section class="phase-section" id="phase6"><div class="section-header"><div class="badge">6</div><div class="section-title"><h2>Deine Menükarte</h2><div class="meta">Hake jeden Schritt ab.</div></div></div><div class="word-box">
+<p class="word-section">Neues Dokument anlegen</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="62"><div class="word-step-nr">1</div><div>Klicke auf <span class="word-click">Datei</span> → <span class="word-click">Neu</span> → <span class="word-click">Leeres Dokument</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="63"><div class="word-step-nr">2</div><div>Klicke auf <span class="word-click">Datei</span> → <span class="word-click">Speichern unter</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="64"><div class="word-step-nr">3</div><div>Speichere die Datei so: <em>Nachname_Vorname_Menuekarte</em></div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="65"><div class="word-step-nr">4</div><div>Klicke im Reiter <span class="word-click">Start</span> auf <span class="word-click">Zentrieren</span>. Das ist das Symbol mit den Linien in der Mitte.</div></label></li>
+</ul>
+<p class="word-section">Zuerst nur tippen. Nach jeder Zeile Enter drücken.</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="66"><div class="word-step-nr">1</div><div><em>Unser Menü</em></div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="67"><div class="word-step-nr">2</div><div><em>Vorspeise</em></div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="68"><div class="word-step-nr">3</div><div>In die nächste Zeile: der Name deiner Vorspeise</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="69"><div class="word-step-nr">4</div><div>Drücke einmal zusätzlich Enter. So entsteht eine leere Zeile.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="70"><div class="word-step-nr">5</div><div><em>Hauptgericht</em></div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="71"><div class="word-step-nr">6</div><div>In die nächste Zeile: der Name des Gerichts aus deinem Rezept</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="72"><div class="word-step-nr">7</div><div>In die nächste Zeile: ein Satz, der das Hauptgericht beschreibt</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="73"><div class="word-step-nr">8</div><div>Drücke einmal zusätzlich Enter.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="74"><div class="word-step-nr">9</div><div><em>Nachtisch</em></div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="75"><div class="word-step-nr">10</div><div>In die nächste Zeile: der Name deines Nachtischs. Drücke danach Enter.</div></label></li>
+</ul>
+<p class="word-section">Die Überschrift groß machen</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="76"><div class="word-step-nr">1</div><div>Klicke dreimal schnell auf <em>Unser Menü</em>. Die Zeile ist jetzt markiert.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="77"><div class="word-step-nr">2</div><div>Klicke im Reiter <span class="word-click">Start</span> in das Feld für die Schriftgröße. Tippe <strong>36</strong> und drücke Enter.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="78"><div class="word-step-nr">3</div><div>Klicke auf das fette <span class="word-click">F</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="79"><div class="word-step-nr">4</div><div>Klicke auf eine freie Stelle. Die Markierung ist weg.</div></label></li>
+</ul>
+<p class="word-section">Vorspeise, Hauptgericht und Nachtisch hervorheben</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="80"><div class="word-step-nr">1</div><div>Klicke dreimal schnell auf <em>Vorspeise</em>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="81"><div class="word-step-nr">2</div><div>Stelle die Schriftgröße auf <strong>20</strong>. Klicke auf <span class="word-click">F</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="82"><div class="word-step-nr">3</div><div>Mache das Gleiche mit <em>Hauptgericht</em>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="83"><div class="word-step-nr">4</div><div>Mache das Gleiche mit <em>Nachtisch</em>.</div></label></li>
+</ul>
+<p class="word-section">Die Gerichte gut lesbar machen</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="84"><div class="word-step-nr">1</div><div>Klicke dreimal schnell auf den Namen deiner Vorspeise.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="85"><div class="word-step-nr">2</div><div>Stelle die Schriftgröße auf <strong>16</strong>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="86"><div class="word-step-nr">3</div><div>Mache das Gleiche mit dem Hauptgericht.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="87"><div class="word-step-nr">4</div><div>Mache das Gleiche mit dem beschreibenden Satz.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="88"><div class="word-step-nr">5</div><div>Mache das Gleiche mit dem Nachtisch.</div></label></li>
+</ul>
+<p class="word-section">Bild einfügen</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="89"><div class="word-step-nr">1</div><div>Du darfst ein Bild im Internet suchen. Speichere es wie in Teil 5.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="90"><div class="word-step-nr">2</div><div>Klicke in die leere Zeile ganz unten unter deinem Nachtisch.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="91"><div class="word-step-nr">3</div><div>Klicke auf <span class="word-click">Einfügen</span> → <span class="word-click">Bilder</span> → <span class="word-click">Dieses Gerät</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="92"><div class="word-step-nr">4</div><div>Wähle dein Bild. Klicke auf <span class="word-click">Einfügen</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="93"><div class="word-step-nr">5</div><div>Ist das Bild zu groß? Klicke es an. Ziehe einen <strong>Eckpunkt</strong> nach innen.</div></label></li>
+</ul>
+<p class="word-section">Prüfen und speichern</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="94"><div class="word-step-nr">1</div><div>Klicke auf <span class="word-click">Datei</span> → <span class="word-click">Drucken</span>. Rechts siehst du die Vorschau. <strong>Noch nicht drucken.</strong></div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="95"><div class="word-step-nr">2</div><div>Steht alles auf einer Seite? Wenn nicht, mache das Bild kleiner.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="96"><div class="word-step-nr">3</div><div>Klicke oben links auf den Pfeil. So kommst du zurück zum Dokument.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="97"><div class="word-step-nr">4</div><div>Speichere mit Strg und S.</div></label></li>
+</ul>
+<div class="word-tip">Etwas ist verrutscht oder verschwunden? Klicke auf Rückgängig (gebogener Pfeil nach links).</div>
+</div><div class="nav-row"><button class="btn btn-secondary" onclick="showPhase(5)">Zurück</button><button class="btn btn-primary" onclick="showPhase(7)">Weiter</button></div></section>
+<section class="phase-section" id="phase7"><div class="section-header"><div class="badge">7</div><div class="section-title"><h2>Prüfen und abgeben</h2><div class="meta">Hake jeden Schritt ab.</div></div></div><div class="word-box">
+<p class="word-section">Rezeptblatt</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="98"><div class="word-step-nr">1</div><div>Titel, Vorbereitungszeit, Zubereitungszeit und Portionen sind da.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="99"><div class="word-step-nr">2</div><div>Die Tabelle Geräte herrichten ist ausgefüllt.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="100"><div class="word-step-nr">3</div><div>Alle Zutaten und alle Arbeitsschritte stehen in der Tabelle.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="101"><div class="word-step-nr">4</div><div>Das Bild ist eingefügt.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="102"><div class="word-step-nr">5</div><div>Ich habe die Rechtschreibung geprüft.</div></label></li>
+</ul>
+<p class="word-section">Menükarte</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="103"><div class="word-step-nr">1</div><div>Überschrift, Vorspeise, Hauptgericht, Beschreibung, Nachtisch und Bild sind da.</div></label></li>
+</ul>
+<p class="word-section">Abgeben</p><ul class="word-steps">
+<li><label class="word-step"><input type="checkbox" data-k="104"><div class="word-step-nr">1</div><div>Speichere beide Dateien ein letztes Mal.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="105"><div class="word-step-nr">2</div><div>Drucke beide: <span class="word-click">Datei</span> → <span class="word-click">Drucken</span>.</div></label></li>
+<li><label class="word-step"><input type="checkbox" data-k="106"><div class="word-step-nr">3</div><div>Gib die Ausdrucke und beide Word-Dateien ab.</div></label></li>
+</ul>
+</div><div class="nav-row"><button class="btn btn-secondary" onclick="showPhase(6)">Zurück</button><span></span></div></section>
+<script>
+function showPhase(idx){document.querySelectorAll('.phase-section').forEach((s,i)=>s.classList.toggle('active',i===idx));
+document.querySelectorAll('.phase-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));window.scrollTo({top:0,behavior:'smooth'});}
+const KEY='kl7-rezept-menuekarte';let st={};try{st=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){}
+document.querySelectorAll('input[data-k]').forEach(c=>{c.checked=!!st[c.dataset.k];c.addEventListener('change',()=>{st[c.dataset.k]=c.checked;try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}});});
+</script></body></html>
